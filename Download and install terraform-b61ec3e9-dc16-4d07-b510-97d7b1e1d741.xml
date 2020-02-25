@@ -1,0 +1,40 @@
+<joblist>
+  <job>
+    <defaultTab>nodes</defaultTab>
+    <description></description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>false</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>1</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <id>b61ec3e9-dc16-4d07-b510-97d7b1e1d741</id>
+    <loglevel>INFO</loglevel>
+    <name>Download and install terraform</name>
+    <nodeFilterEditable>false</nodeFilterEditable>
+    <nodefilters>
+      <filter>.*</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>true</nodesSelectedByDefault>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <script><![CDATA[#!/bin/bash
+
+FILE=/usr/local/terraform
+if [ -f "$FILE" ]; then
+    echo "$FILE exist"
+else 
+    wget https://releases.hashicorp.com/terraform/0.12.21/terraform_0.12.21_linux_amd64.zip
+    unzip ./terraform*zip
+    rm ./*zip*
+    sudo mv terraform /usr/local/bin
+fi]]></script>
+        <scriptargs />
+      </command>
+    </sequence>
+    <uuid>b61ec3e9-dc16-4d07-b510-97d7b1e1d741</uuid>
+  </job>
+</joblist>
