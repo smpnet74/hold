@@ -12,7 +12,7 @@
     <executionEnabled>true</executionEnabled>
     <id>49d37332-bffd-45f0-87b8-e24e52cc3ccf</id>
     <loglevel>INFO</loglevel>
-    <name>Download and install eksctl</name>
+    <name>singlejob - Download and install eksctl</name>
     <nodeFilterEditable>false</nodeFilterEditable>
     <nodefilters>
       <filter>.*</filter>
