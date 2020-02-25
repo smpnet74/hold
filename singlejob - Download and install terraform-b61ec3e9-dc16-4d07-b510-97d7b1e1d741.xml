@@ -12,7 +12,7 @@
     <executionEnabled>true</executionEnabled>
     <id>b61ec3e9-dc16-4d07-b510-97d7b1e1d741</id>
     <loglevel>INFO</loglevel>
-    <name>Download and install terraform</name>
+    <name>singlejob - Download and install terraform</name>
     <nodeFilterEditable>false</nodeFilterEditable>
     <nodefilters>
       <filter>.*</filter>
