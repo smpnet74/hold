@@ -1,0 +1,40 @@
+<joblist>
+  <job>
+    <defaultTab>nodes</defaultTab>
+    <description></description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>false</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>1</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <id>49d37332-bffd-45f0-87b8-e24e52cc3ccf</id>
+    <loglevel>INFO</loglevel>
+    <name>Download and install eksctl</name>
+    <nodeFilterEditable>false</nodeFilterEditable>
+    <nodefilters>
+      <filter>.*</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>true</nodesSelectedByDefault>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <script><![CDATA[#!/bin/bash
+
+FILE=/usr/local/eksctl
+if [ -f "$FILE" ]; then
+    echo "$FILE exist"
+else
+    wget https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz
+    tar -zxf ./eksctl*gz
+    rm ./*gz*
+    sudo mv eksctl /usr/local/bin
+fi]]></script>
+        <scriptargs />
+      </command>
+    </sequence>
+    <uuid>49d37332-bffd-45f0-87b8-e24e52cc3ccf</uuid>
+  </job>
+</joblist>
