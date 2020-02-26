@@ -1,0 +1,107 @@
+<joblist>
+  <job>
+    <context>
+      <options preserveOrder='true'>
+        <option name='clustername' value='spotcluster1' />
+        <option name='vpc1' value='vpc-02896e7a1cc787a0b' />
+        <option name='vpcCIDR1' value='10.0.0.0/16' />
+        <option name='subnetAZ1' value='us-east-1c' />
+        <option name='subnetAZ2' value='us-east-1d' />
+        <option name='subnet1' value='subnet-04a33e02e9629c29e' />
+        <option name='subnet2' value='subnet-0b1f4c1ec7d50980a' />
+        <option name='subnetCIDR1' value='10.0.0.0/24' />
+        <option name='subnetCIDR2' value='10.0.1.0/24' />
+      </options>
+    </context>
+    <defaultTab>nodes</defaultTab>
+    <description></description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>false</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>1</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <id>6f5c8abe-8d2c-4462-94d5-f3b052b01424</id>
+    <loglevel>INFO</loglevel>
+    <name>Multi-step - create spotcluster1 yaml</name>
+    <nodeFilterEditable>false</nodeFilterEditable>
+    <nodefilters>
+      <filter>.*</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>true</nodesSelectedByDefault>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <script><![CDATA[#!/bin/bash
+
+FILE=/usr/local/eksctl
+if [ -f "$FILE" ]; then
+    echo "$FILE exist"
+else
+    wget https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz
+    tar -zxf ./eksctl*gz
+    rm ./*gz*
+    sudo mv eksctl /usr/local/bin
+fi]]></script>
+        <scriptargs />
+      </command>
+      <command>
+        <script><![CDATA[#!/bin/bash
+
+FILE=~/@option.clustername@.yaml
+if [ -f "$FILE" ]; then
+    echo "$FILE exist"
+else 
+cat << EOF > ~/@option.clustername@.yaml
+# An example of ClusterConfig showing nodegroups with mixed instances (spot and on demand):
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+    name: @option.clustername@
+    region: us-east-1
+
+vpc:
+  id: "@option.vpc1@"
+  cidr: "@option.vpcCIDR1@"
+  subnets:
+    public:
+      @option.subnetAZ1@:
+        id: "@option.subnet1@"
+        cidr: "@option.subnetCIDR1@"
+      @option.subnetAZ2@:
+        id: "@option.subnet2@"
+        cidr: "@option.subnetCIDR2@"
+
+nodeGroups:
+    - name: ng-1
+      minSize: 2
+      maxSize: 6
+      instancesDistribution:
+        maxPrice: 0.06
+        instanceTypes: ["t2.medium", "t3.medium"]  # At least two instance types should be specified
+        onDemandBaseCapacity: 0
+        onDemandPercentageAboveBaseCapacity: 50
+        spotInstancePools: 2
+      iam:
+        withAddonPolicies:
+          autoScaler: true
+          albIngress: true
+EOF
+fi]]></script>
+        <scriptargs />
+      </command>
+      <command>
+        <script><![CDATA[#!/usr/bin/bash
+
+nohup eksctl create cluster -f ./@option.clustername@.yaml &]]></script>
+        <scriptargs />
+      </command>
+    </sequence>
+    <timeout>0</timeout>
+    <uuid>6f5c8abe-8d2c-4462-94d5-f3b052b01424</uuid>
+  </job>
+</joblist>
