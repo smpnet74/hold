@@ -3,12 +3,12 @@
     <context>
       <options preserveOrder='true'>
         <option name='clustername' value='spotcluster1' />
-        <option name='vpc1' value='vpc-02896e7a1cc787a0b' />
+        <option name='vpc1' value='vpc-02aaac29928ce943d' />
         <option name='vpcCIDR1' value='10.0.0.0/16' />
         <option name='subnetAZ1' value='us-east-1c' />
         <option name='subnetAZ2' value='us-east-1d' />
-        <option name='subnet1' value='subnet-04a33e02e9629c29e' />
-        <option name='subnet2' value='subnet-0b1f4c1ec7d50980a' />
+        <option name='subnet1' value='subnet-0e48abcdec36e5116' />
+        <option name='subnet2' value='subnet-0702572e47b763545' />
         <option name='subnetCIDR1' value='10.0.0.0/24' />
         <option name='subnetCIDR2' value='10.0.1.0/24' />
       </options>
