@@ -25,7 +25,7 @@
     <executionEnabled>true</executionEnabled>
     <id>6f5c8abe-8d2c-4462-94d5-f3b052b01424</id>
     <loglevel>INFO</loglevel>
-    <name>Multi-step - create spotcluster1 yaml</name>
+    <name>Multi-step - Create EKS cluster linux acadamy</name>
     <nodeFilterEditable>false</nodeFilterEditable>
     <nodefilters>
       <filter>.*</filter>
@@ -95,9 +95,17 @@ fi]]></script>
         <scriptargs />
       </command>
       <command>
-        <script><![CDATA[#!/usr/bin/bash
+        <script><![CDATA[#!/bin/bash
 
-nohup eksctl create cluster -f ./@option.clustername@.yaml &]]></script>
+FILE=/usr/local/bin/kubectl
+if [ -f "$FILE" ]; then
+    echo "$FILE exist"
+else 
+curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+sudo mv kubectl /usr/local/bin
+chmod 755 /usr/local/bin/kubectl
+fi
+]]></script>
         <scriptargs />
       </command>
     </sequence>
